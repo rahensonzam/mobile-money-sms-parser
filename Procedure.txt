@@ -1,0 +1,10 @@
+Concatenate files in Z-A order of filename
+
+Find "Inbox SMS\r\n\r\n", replace with ""
+
+Find "\r\n\r\n", get line numbers, check that all are (3+1) apart, report those that are not
+
+Find "$", if found, throw error. If not found, Find "\r\n\r\n", replace with "$"
+Replace "\r\n" with "\t"
+Replace "$" with "\r\n"
+
