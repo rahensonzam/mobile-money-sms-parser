@@ -1,3 +1,5 @@
+//"import" smsData from smsDataFile.js
+
 document.addEventListener("readystatechange", function() {    
     if (document.readyState == "complete") {
         main();
@@ -5,7 +7,7 @@ document.addEventListener("readystatechange", function() {
 });
 
 function main() {
-	let smsVar0 = `text`
+	let smsVar0 = smsData
     let smsVar1 = RemoveInboxSMS(smsVar0)
     // console.log("smsVar1")
     // console.log(smsVar1)
