@@ -2,9 +2,65 @@
 
 document.addEventListener("readystatechange", function() {    
     if (document.readyState == "complete") {
+
+        const fileSelector1 = document.getElementById("fileSelector")
+        fileSelector1.addEventListener("change", getFromFiles)
+
         main();
     }
 });
+
+
+// Returns array
+async function getFromFiles() {
+
+    const fileSelector1 = document.getElementById("fileSelector")
+
+    const fileSelectFileList = fileSelector1.files
+    const fileContentsList = []
+
+    for (let i = 0; i <= fileSelectFileList.length - 1; i++) {
+        const file = fileSelectFileList[i]
+        fileContentsList.push({id: file.name, content: await readFileReaderAsync(file)})
+    }
+
+    console.log("fileContentsList")
+    console.log(fileContentsList)
+
+    fileContentsList.sort((a, b) => b.id - a.id);
+
+    const forConcat = []
+ 
+    for (let i = 0; i <= fileContentsList.length - 1; i++) {
+        forConcat.push(fileContentsList[i].content)
+    }
+
+    const output = forConcat.join("\n")
+    console.log("output")
+    console.log(output)
+
+    // return fileContentsList
+
+}
+
+// // Takes array, returns string
+// function concatFiles(fileContentsList) {
+
+//     fileContentsList.sort((a, b) => b.id - a.id);
+
+//     const forConcat = []
+ 
+//     for (let i = 0; i <= fileContentsList.length - 1; i++) {
+//         forConcat.push(fileContentsList[i].content)
+//     }
+
+//     const output = forConcat.join("\n")
+//     console.log("output")
+//     console.log(output)
+
+//     return output
+
+// }
 
 function main() {
 	let smsVar0 = smsData
@@ -57,4 +113,16 @@ function tabulateList(inputString) {
     inputString = inputString.replaceAll("\n","\t")
     inputString = inputString.replaceAll("$","\n")
     return inputString
+}
+
+// Takes file, returns promise
+async function readFileReaderAsync(file) {
+    return new Promise(function (resolve, reject) {
+        let reader = new FileReader()
+        reader.onload = function () {
+            resolve(reader.result)
+        }
+        reader.onerror = reject
+        reader.readAsText(file)
+    })
 }
