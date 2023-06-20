@@ -4,12 +4,40 @@ document.addEventListener("readystatechange", function() {
     if (document.readyState == "complete") {
 
         const fileSelector1 = document.getElementById("fileSelector")
-        fileSelector1.addEventListener("change", getFromFiles)
+        fileSelector1.addEventListener("change", main1)
 
-        main();
+        main2();
     }
 });
 
+
+async function main1() {
+
+    let fileContentsList = await getFromFiles()
+    console.log("fileContentsList")
+    console.log(fileContentsList)
+
+    let output = concatFiles(fileContentsList)
+    console.log("output")
+    console.log(output)
+
+}
+
+function main2() {
+	let smsVar0 = smsData
+    let smsVar1 = RemoveInboxSMS(smsVar0)
+    // console.log("smsVar1")
+    // console.log(smsVar1)
+
+    let issuesArray = checkAbnormalLineCount(smsVar1)
+    console.log("issuesArray")
+    console.log(issuesArray.join("\n"))
+
+    let smsVar2 = tabulateList(smsVar1)
+    console.log("smsVar2")
+    console.log(smsVar2)
+
+}
 
 // Returns array
 async function getFromFiles() {
@@ -24,8 +52,12 @@ async function getFromFiles() {
         fileContentsList.push({id: file.name, content: await readFileReaderAsync(file)})
     }
 
-    console.log("fileContentsList")
-    console.log(fileContentsList)
+    return fileContentsList
+
+}
+
+// Takes array, returns string
+function concatFiles(fileContentsList) {
 
     fileContentsList.sort((a, b) => b.id - a.id);
 
@@ -36,45 +68,8 @@ async function getFromFiles() {
     }
 
     const output = forConcat.join("\n")
-    console.log("output")
-    console.log(output)
 
-    // return fileContentsList
-
-}
-
-// // Takes array, returns string
-// function concatFiles(fileContentsList) {
-
-//     fileContentsList.sort((a, b) => b.id - a.id);
-
-//     const forConcat = []
- 
-//     for (let i = 0; i <= fileContentsList.length - 1; i++) {
-//         forConcat.push(fileContentsList[i].content)
-//     }
-
-//     const output = forConcat.join("\n")
-//     console.log("output")
-//     console.log(output)
-
-//     return output
-
-// }
-
-function main() {
-	let smsVar0 = smsData
-    let smsVar1 = RemoveInboxSMS(smsVar0)
-    // console.log("smsVar1")
-    // console.log(smsVar1)
-
-    let issuesArray = checkAbnormalLineCount(smsVar1)
-    console.log("issuesArray")
-    console.log(issuesArray.join("\n"))
-
-    let smsVar2 = tabulateList(smsVar1)
-    console.log("smsVar2")
-    console.log(smsVar2)
+    return output
 
 }
 
