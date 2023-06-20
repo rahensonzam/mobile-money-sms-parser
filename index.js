@@ -21,21 +21,29 @@ async function main1() {
     console.log("output")
     console.log(output)
 
-}
-
-function main2() {
-	let smsVar0 = smsData
-    let smsVar1 = RemoveInboxSMS(smsVar0)
-    // console.log("smsVar1")
-    // console.log(smsVar1)
+    let smsVar1 = RemoveInboxSMS(output)
+    console.log("smsVar1")
+    console.log(smsVar1)
 
     let issuesArray = checkAbnormalLineCount(smsVar1)
     console.log("issuesArray")
     console.log(issuesArray.join("\r\n"))
 
-    let smsVar2 = tabulateList(smsVar1)
-    console.log("smsVar2")
-    console.log(smsVar2)
+}
+
+function main2() {
+	// let smsVar0 = smsData
+    // let smsVar1 = RemoveInboxSMS(smsVar0)
+    // // console.log("smsVar1")
+    // // console.log(smsVar1)
+
+    // let issuesArray = checkAbnormalLineCount(smsVar1)
+    // console.log("issuesArray")
+    // console.log(issuesArray.join("\r\n"))
+
+    // let smsVar2 = tabulateList(smsVar1)
+    // console.log("smsVar2")
+    // console.log(smsVar2)
 
 }
 
