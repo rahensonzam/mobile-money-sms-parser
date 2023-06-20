@@ -31,7 +31,7 @@ function main2() {
 
     let issuesArray = checkAbnormalLineCount(smsVar1)
     console.log("issuesArray")
-    console.log(issuesArray.join("\n"))
+    console.log(issuesArray.join("\r\n"))
 
     let smsVar2 = tabulateList(smsVar1)
     console.log("smsVar2")
@@ -75,12 +75,12 @@ function concatFiles(fileContentsList) {
 
 // Takes string, returns string
 function RemoveInboxSMS(inputString) {
-    return inputString.replaceAll("Inbox SMS\n\n","")
+    return inputString.replaceAll("Inbox SMS\r\n\r\n","")
 }
 
 // Takes string, returns array
 function checkAbnormalLineCount(inputString) {
-    let inputStringArray = inputString.split("\n")
+    let inputStringArray = inputString.split("\r\n")
     let lineNumbersArray = []
     let issuesArray = []
     for (let index = 0; index <= inputStringArray.length - 1; index++) {
@@ -104,9 +104,9 @@ function tabulateList(inputString) {
     if(inputString.indexOf("$") != -1){
         throw new Error(`"$" found in string`)
     }
-    inputString = inputString.replaceAll("\n\n","$")
-    inputString = inputString.replaceAll("\n","\t")
-    inputString = inputString.replaceAll("$","\n")
+    inputString = inputString.replaceAll("\r\n\r\n","$")
+    inputString = inputString.replaceAll("\r\n","\t")
+    inputString = inputString.replaceAll("$","\r\n")
     return inputString
 }
 
