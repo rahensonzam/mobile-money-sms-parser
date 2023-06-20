@@ -67,7 +67,7 @@ function concatFiles(fileContentsList) {
         forConcat.push(fileContentsList[i].content)
     }
 
-    const output = forConcat.join("\n")
+    const output = forConcat.join("")
 
     return output
 
