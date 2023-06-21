@@ -3,9 +3,13 @@ document.addEventListener("readystatechange", function() {
 
         const fileSelector1 = document.getElementById("fileSelector1")
         fileSelector1.addEventListener("change", main1)
+        const Go1 = document.getElementById("Go1")
+        Go1.addEventListener("click", main1)
 
         const fileSelector2 = document.getElementById("fileSelector2")
         fileSelector2.addEventListener("change", main2)
+        const Go2 = document.getElementById("Go2")
+        Go2.addEventListener("click", main2)
 
     }
 })
