@@ -89,7 +89,7 @@ function concatFiles(fileContentsList) {
 
 // Takes string, returns string
 function RemoveInboxSMS(inputString) {
-    return inputString.replaceAll("Inbox SMS\r\n\r\n","")
+    return inputString.replace(/^\r\n/,"").replaceAll("Inbox SMS\r\n\r\n","")
 }
 
 // Takes string, returns array
