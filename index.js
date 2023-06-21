@@ -67,8 +67,18 @@ async function getFromFiles() {
 // Takes array, returns string
 function concatFiles(fileContentsList) {
 
-    fileContentsList.sort((a, b) => b.id - a.id);
-
+    fileContentsList.sort((a, b) => {
+        if (a.id > b.id) {
+          return -1;
+        }
+        if (a.id < b.id) {
+          return 1;
+        }
+      
+        // ids must be equal
+        return 0
+    })
+    
     const forConcat = []
  
     for (let i = 0; i <= fileContentsList.length - 1; i++) {
