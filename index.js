@@ -25,10 +25,12 @@ async function main1() {
     let smsVar1 = RemoveInboxSMS(smsVar0)
     console.log("smsVar1")
     console.log(smsVar1)
+    document.getElementById("output1").value = smsVar1
 
     let issuesArray = checkAbnormalLineCount(smsVar1)
     console.log("issuesArray")
     console.log(issuesArray.join("\r\n"))
+    document.getElementById("output1b").value = issuesArray.join("\r\n")
 
 }
 
@@ -39,6 +41,7 @@ async function main2() {
     let smsVar3 = tabulateList(smsVar2)
     console.log("smsVar3")
     console.log(smsVar3)
+    document.getElementById("output2").value = smsVar3
 
 }
 
