@@ -1,27 +1,28 @@
-//"import" smsData from smsDataFile.js
-
 document.addEventListener("readystatechange", function() {    
     if (document.readyState == "complete") {
 
-        const fileSelector1 = document.getElementById("fileSelector")
+        const fileSelector1 = document.getElementById("fileSelector1")
         fileSelector1.addEventListener("change", main1)
 
-        main2();
+        const fileSelector2 = document.getElementById("fileSelector2")
+        fileSelector2.addEventListener("change", main2)
+
     }
-});
+})
 
 
 async function main1() {
 
-    let fileContentsList = await getFromFiles()
+    const fileSelector1 = document.getElementById("fileSelector1")
+    let fileContentsList = await getFromFiles(fileSelector1)
     console.log("fileContentsList")
     console.log(fileContentsList)
 
-    let output = concatFiles(fileContentsList)
-    console.log("output")
-    console.log(output)
+    let smsVar0 = concatFiles(fileContentsList)
+    console.log("smsVar0")
+    console.log(smsVar0)
 
-    let smsVar1 = RemoveInboxSMS(output)
+    let smsVar1 = RemoveInboxSMS(smsVar0)
     console.log("smsVar1")
     console.log(smsVar1)
 
@@ -31,28 +32,20 @@ async function main1() {
 
 }
 
-function main2() {
-	// let smsVar0 = smsData
-    // let smsVar1 = RemoveInboxSMS(smsVar0)
-    // // console.log("smsVar1")
-    // // console.log(smsVar1)
+async function main2() {
 
-    // let issuesArray = checkAbnormalLineCount(smsVar1)
-    // console.log("issuesArray")
-    // console.log(issuesArray.join("\r\n"))
-
-    // let smsVar2 = tabulateList(smsVar1)
-    // console.log("smsVar2")
-    // console.log(smsVar2)
+    const fileSelector2 = document.getElementById("fileSelector2")
+    let smsVar2 = await readFileReaderAsync(fileSelector2.files[0])
+    let smsVar3 = tabulateList(smsVar2)
+    console.log("smsVar3")
+    console.log(smsVar3)
 
 }
 
 // Returns array
-async function getFromFiles() {
+async function getFromFiles(inputfileSelector) {
 
-    const fileSelector1 = document.getElementById("fileSelector")
-
-    const fileSelectFileList = fileSelector1.files
+    const fileSelectFileList = inputfileSelector.files
     const fileContentsList = []
 
     for (let i = 0; i <= fileSelectFileList.length - 1; i++) {
@@ -69,10 +62,10 @@ function concatFiles(fileContentsList) {
 
     fileContentsList.sort((a, b) => {
         if (a.id > b.id) {
-          return -1;
+          return -1
         }
         if (a.id < b.id) {
-          return 1;
+          return 1
         }
       
         // ids must be equal
