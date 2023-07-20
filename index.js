@@ -49,7 +49,7 @@ async function main2() {
 
 }
 
-// Returns array
+// Takes file, returns array
 async function getFromFiles(inputfileSelector) {
 
     const fileSelectFileList = inputfileSelector.files
