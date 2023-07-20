@@ -4,6 +4,9 @@ module.exports = {
         browser: true,
         es6: true
     },
+    globals: {
+      "Papa": "writable"
+    },
     parserOptions: {
         "ecmaVersion": 2021,
         "sourceType": "script"

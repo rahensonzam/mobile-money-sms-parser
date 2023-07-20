@@ -11,6 +11,11 @@ document.addEventListener("readystatechange", function() {
         const Go2 = document.getElementById("Go2")
         Go2.addEventListener("click", main2)
 
+        const fileSelector3 = document.getElementById("fileSelector3")
+        fileSelector3.addEventListener("change", main3)
+        const Go3 = document.getElementById("Go3")
+        Go3.addEventListener("click", main3)
+
     }
 })
 
@@ -46,6 +51,19 @@ async function main2() {
     console.log("smsVar3")
     console.log(smsVar3)
     document.getElementById("output2").value = smsVar3
+
+}
+
+async function main3() {
+
+    const fileSelector3 = document.getElementById("fileSelector3")
+    let smsVar4 = await readFileReaderAsync(fileSelector3.files[0])
+    let smsVar5 = `network\tdateAndTime\tdescription\r\n${smsVar4}`    
+    let smsVar6 = Papa.parse(smsVar5, {header: true})
+    let smsVar7 = addRowType(smsVar6)
+    console.log("smsVar7")
+    console.log(smsVar7)
+    document.getElementById("output3").value = smsVar7
 
 }
 
@@ -136,6 +154,24 @@ function tabulateList(inputString) {
     inputString = inputString.replaceAll("\r\n","\t")
     inputString = inputString.replaceAll("$","\r\n")
     return inputString
+}
+
+// Takes array of objects, returns array of objects
+function addRowType(inputArray) {
+
+    const outputArray = []
+
+    for (let index = 0; index <= inputArray.length - 1; index++) {
+        if (inputArray[index].network === "AirtelMoney") {
+            if (inputArray[index].description === "") {
+                inputArray[index].type = ""
+            }
+        }
+        outputArray.push(inputArray[index])
+    }
+
+    return outputArray
+
 }
 
 // Takes file, returns promise
