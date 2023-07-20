@@ -67,20 +67,10 @@ async function getFromFiles(inputfileSelector) {
 // Takes array, returns string
 function concatFiles(fileContentsList) {
 
-    fileContentsList.sort((a, b) => {
-        if (a.id > b.id) {
-          return -1
-        }
-        if (a.id < b.id) {
-          return 1
-        }
-      
-        // ids must be equal
-        return 0
-    })
+    textSort(fileContentsList, "id")
     
     const forConcat = []
- 
+
     for (let i = 0; i <= fileContentsList.length - 1; i++) {
         forConcat.push(fileContentsList[i].content)
     }
@@ -88,6 +78,26 @@ function concatFiles(fileContentsList) {
     const output = forConcat.join("")
 
     return output
+
+}
+
+// Takes array of objects, string, returns array of objects
+function textSort(inputArray, prop) {
+
+    function textCompare(a, b) {
+        if (a[prop] > b[prop]) {
+          return -1
+        }
+        if (a[prop] < b[prop]) {
+          return 1
+        }
+    
+        // props must be equal
+        return 0
+    }
+
+	inputArray.sort(textCompare)
+	return inputArray
 
 }
 
