@@ -58,14 +58,15 @@ async function main3() {
 
     const fileSelector3 = document.getElementById("fileSelector3")
     let smsVar4 = await readFileReaderAsync(fileSelector3.files[0])
-    let smsVar5 = `network\tdateAndTime\tdescription\r\n${smsVar4}`    
+    let smsVar5 = `sender\tdateAndTime\tdescription\r\n${smsVar4}`    
     let smsVar6 = Papa.parse(smsVar5, {header: true})
-    let smsVar7 = addRowType(smsVar6)
+    let smsVar7 = addRowType(smsVar6.data)
+    let smsVar8 = Papa.unparse(smsVar7, {delimiter: "\t"})
     console.log("smsVar7")
     console.log(smsVar7)
-    document.getElementById("output3").value = smsVar7
-
-}
+    console.log("smsVar8")
+    console.log(smsVar8)
+    document.getElementById("output3").value = smsVar8}
 
 // Takes file, returns array
 async function getFromFiles(inputfileSelector) {
@@ -162,12 +163,91 @@ function addRowType(inputArray) {
     const outputArray = []
 
     for (let index = 0; index <= inputArray.length - 1; index++) {
-        if (inputArray[index].network === "AirtelMoney") {
-            if (inputArray[index].description === "") {
-                inputArray[index].type = ""
+        const element = inputArray[index]
+        if (element.sender === "AirtelMoney") {
+            if (element.description.includes("insufficient funds")) {
+                element.type = "Other"
+                outputArray.push(element)
+                continue
+            }
+
+            if (element.description.includes("Commission disbursement")) {
+                element.type = "Commission"
+            }
+            if (element.description.includes("Txn ID: PP") &&
+                element.description.includes("Dear Customer, you have received")) {
+                element.type = "Float"
+            }
+            if (element.description.includes("Txn. ID: PP") &&
+                element.description.includes("Dear Customer, you have received")) {
+                element.type = "Float"
+            }
+            if (element.description.includes("Txn. ID : PP") &&
+                element.description.includes("You have sent")) {
+                element.type = "Cash"
+            }
+            if (element.description.includes("Trans. ID :AO")) {
+                element.type = "Float"
+            }
+            if (element.description.includes("Txn. ID: RB")) {
+                element.type = "Float"
+            }
+            if (element.description.includes("Txn ID: RW")) {
+                element.type = "Cash"
+            }
+            if (element.description.includes("Trans. ID: CI")) {
+                element.type = "Deposit"
+            }
+            if (element.description.includes("Txn. ID: CO")) {
+                element.type = "Withdrawal"
+            }
+            if (element.description.includes("Trans.ID: MB")) {
+                element.type = "Airtime"
+            }
+            if (element.description.includes("Trans.ID: MO")) {
+                element.type = "Airtime"
+            }
+            if (element.description.includes("Txn. ID : MB")) {
+                element.type = "Airtime"
+            }
+            if (element.description.includes("Txn. ID : MO")) {
+                element.type = "Airtime"
+            }
+            if (element.description.includes("Txn ID : RC")) {
+                element.type = "Airtime"
+            }
+            if (element.description.includes("Txn. ID : ES")) {
+                element.type = "Check"
             }
         }
-        outputArray.push(inputArray[index])
+
+        if (element.sender === "Airtel Data") {
+            if (element.description.includes("insufficient funds")) {
+                element.type = "Other"
+                outputArray.push(element)
+                continue
+            }
+
+            if (element.description.includes("successfully purchased")) {
+                element.type = "Airtime"
+            }
+        }
+
+        if (element.sender === "SoChe") {
+            if (element.description.includes("insufficient funds")) {
+                element.type = "Other"
+                outputArray.push(element)
+                continue
+            }
+
+            // some rows working some not working, why not?
+            if (element.description.includes("successfully purchased")) {
+                element.type = "Airtime"
+            }
+        }
+
+        outputArray.push(element)
+
     }
 
     return outputArray
